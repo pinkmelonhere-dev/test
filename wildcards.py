@@ -42,7 +42,7 @@ class LazyWildcardLoader:
     def _load_txt(self):
         """Load .txt wildcard file"""
         try:
-            with open(self.file_path, 'r', encoding="ISO-8859-1") as f:
+            with open(self.file_path, 'r', encoding="utf-8") as f:
                 lines = f.read().splitlines()
                 return [x for x in lines if x.strip() and not x.strip().startswith('#')]
         except (yaml.reader.ReaderError, UnicodeDecodeError):
@@ -53,7 +53,7 @@ class LazyWildcardLoader:
     def _load_yaml(self):
         """Load .yaml/.yml wildcard file"""
         try:
-            with open(self.file_path, 'r', encoding="ISO-8859-1") as f:
+            with open(self.file_path, 'r', encoding="utf-8") as f:
                 return yaml.load(f, Loader=yaml.FullLoader)
         except (yaml.reader.ReaderError, UnicodeDecodeError):
             with open(self.file_path, 'r', encoding="UTF-8", errors="ignore") as f:
@@ -360,7 +360,7 @@ def get_wildcard_value(key):
 def load_txt_wildcard(file_path):
     """Load a .txt wildcard file"""
     try:
-        with open(file_path, 'r', encoding="ISO-8859-1") as f:
+        with open(file_path, 'r', encoding="utf-8") as f:
             lines = f.read().splitlines()
             return [x for x in lines if x.strip() and not x.strip().startswith('#')]
     except (yaml.reader.ReaderError, UnicodeDecodeError):
@@ -374,7 +374,7 @@ def load_yaml_wildcard(file_path, key_prefix=''):
     global loaded_wildcards
 
     try:
-        with open(file_path, 'r', encoding="ISO-8859-1") as f:
+        with open(file_path, 'r', encoding="utf-8") as f:
             yaml_data = yaml.load(f, Loader=yaml.FullLoader)
     except (yaml.reader.ReaderError, UnicodeDecodeError):
         with open(file_path, 'r', encoding="UTF-8", errors="ignore") as f:
@@ -480,7 +480,7 @@ def read_wildcard_dict(wildcard_path, on_demand=False):
                 else:
                     # Load data immediately (original behavior)
                     try:
-                        with open(file_path, 'r', encoding="ISO-8859-1") as f:
+                        with open(file_path, 'r', encoding="utf-8") as f:
                             lines = f.read().splitlines()
                             wildcard_dict[key] = [x for x in lines if x.strip() and not x.strip().startswith('#')]
                     except yaml.reader.ReaderError:
@@ -501,7 +501,7 @@ def read_wildcard_dict(wildcard_path, on_demand=False):
                 else:
                     # Load data immediately (original behavior)
                     try:
-                        with open(file_path, 'r', encoding="ISO-8859-1") as f:
+                        with open(file_path, 'r', encoding="utf-8") as f:
                             yaml_data = yaml.load(f, Loader=yaml.FullLoader)
                     except yaml.reader.ReaderError:
                         with open(file_path, 'r', encoding="UTF-8", errors="ignore") as f:
@@ -987,7 +987,7 @@ def process_with_loras(wildcard_opt, model, clip, clip_encoder=None, seed=None, 
         pass3 = ['']
 
     pass3_str = [f'[{x}]' for x in pass3]
-    # logging.info(f"CLIP: {str.join(' + ', pass3_str)}")
+    logging.info(f"CLIP: {str.join(' + ', pass3_str)}")
 
     result = None
 
